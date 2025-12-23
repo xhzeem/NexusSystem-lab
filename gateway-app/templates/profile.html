@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - {{ username }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem;">
+        <div
+            style="width: 80px; height: 80px; background: var(--accent-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; color: #fff;">
+            {{ username[0].upper() }}
+        </div>
+        <div>
+            <h1 style="margin-bottom: 0;">{{ username }}</h1>
+            <span class="status-badge status-live">ACTIVE SESSION</span>
+        </div>
+    </div>
+
+    <h3>Biography</h3>
+    <p>{{ bio }}</p>
+
+    <hr style="border: none; border-top: 1px solid var(--border-color); margin: 2rem 0;">
+
+    <div class="grid">
+        <div class="card feature-card">
+            <h3>Custom Greeting Tool</h3>
+            <p>Our experimental tool for personalized session greetings. Powered by Jinja2 logic.</p>
+            <form action="{{ url_for('greet') }}" method="get">
+                <input type="text" name="name" placeholder="Target Identity" required>
+                <button type="submit">Execute Greeting</button>
+            </form>
+        </div>
+
+        <div class="card feature-card">
+            <h3>Security Modules</h3>
+            <p>Access authorized diagnostic tools for internal network oversight.</p>
+            <div style="display: flex; gap: 1rem; flex-direction: column;">
+                <a href="{{ url_for('checker') }}" class="button"
+                    style="background: var(--border-color); padding: 0.8rem; border-radius: 6px; text-decoration: none; color: #fff; text-align: center;">Network
+                    Checker</a>
+                <a href="{{ url_for('file_viewer') }}" class="button"
+                    style="background: var(--border-color); padding: 0.8rem; border-radius: 6px; text-decoration: none; color: #fff; text-align: center;">Log
+                    Viewer</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

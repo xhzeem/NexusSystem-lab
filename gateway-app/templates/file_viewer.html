@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Log Viewer - Cerberus Lab{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>System Log Viewer</h1>
+    <p>Inspect local service logs and maintenance files.</p>
+
+    {% if not content %}
+    <div class="grid">
+        <div class="card">
+            <h3>System Logs</h3>
+            <p>View the main system welcome log.</p>
+            <a href="?file=welcome.txt" style="color: var(--accent-color); font-weight: 600;">Open welcome.txt</a>
+        </div>
+        <div class="card" style="opacity: 0.5;">
+            <h3>Access Logs</h3>
+            <span class="status-badge" style="background: var(--danger);">LOCKED</span>
+            <p style="margin-top: 1rem;">Logs are only accessible via direct file system reference.</p>
+        </div>
+    </div>
+    {% else %}
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3>Content: {{ filename }}</h3>
+        <a href="{{ url_for('file_viewer') }}" style="color: var(--text-secondary); text-decoration: none;">← Back to
+            Browser</a>
+    </div>
+    <pre>{{ content }}</pre>
+    {% endif %}
+
+    {% if error %}
+    <div class="alert alert-error" style="margin-top: 1rem;">{{ error }}</div>
+    {% endif %}
+</div>
+{% endblock %}

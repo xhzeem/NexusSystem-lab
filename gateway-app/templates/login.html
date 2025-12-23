@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Cerberus Lab{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: center; align-items: center; min-height: 60vh;">
+    <div class="card" style="width: 100%; max-width: 400px;">
+        <h1 style="text-align: center;">Access Node</h1>
+        <p style="text-align: center; margin-bottom: 2rem;">Authorized Personnel Only</p>
+
+        {% if error %}
+        <div class="alert alert-error">{{ error }}</div>
+        {% endif %}
+
+        <form method="post">
+            <label for="username"
+                style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">Identity</label>
+            <input type="text" name="username" id="username" placeholder="Username" required autofocus>
+
+            <label for="password"
+                style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">Passcode</label>
+            <input type="password" name="password" id="password" placeholder="••••••••" required>
+
+            <input type="submit" value="Initialize Session" style="width: 100%; margin-top: 1rem;">
+        </form>
+    </div>
+</div>
+{% endblock %}

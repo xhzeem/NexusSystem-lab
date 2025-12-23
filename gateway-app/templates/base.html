@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Nexus Asset Manager{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        .nav-links a.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-content">
+            <div class="logo">
+                <a href="{{ url_for('dashboard') }}"
+                    style="color: #fff; font-weight: 700; text-decoration: none; font-size: 1.2rem; letter-spacing: 1px;">
+                    NEXUS<span style="color: var(--accent-color);">SYSTEMS</span>
+                </a>
+            </div>
+            <div class="nav-links">
+                {% if user %}
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('inventory') }}">Inventory</a>
+                <a href="{{ url_for('reports') }}">Reports</a>
+                <a href="{{ url_for('network') }}">Network Ops</a>
+                <a href="{{ url_for('maintenance') }}">Maintenance</a>
+                <span style="margin: 0 1rem; color: var(--border-color);">|</span>
+                <a href="{{ url_for('logout') }}" style="color: var(--danger);">Logout</a>
+                {% else %}
+                <a href="{{ url_for('login') }}">Access Node</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Nexus Asset Management Console. Restricted Access.</p>
+        <p style="font-size: 0.7rem; color: var(--border-color); margin-top: 0.5rem;">Correlation ID: NX-{{ range(1000,
+            9999) | random }}</p>
+    </footer>
+</body>
+
+</html>

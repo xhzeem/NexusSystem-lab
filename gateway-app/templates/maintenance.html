@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}System Maintenance - Nexus Systems{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>System Maintenance & Diagnostics</h1>
+    <p>Administrative console for viewing engine logs and performing system-level diagnostics.</p>
+
+    <div class="grid">
+        <div class="card" style="flex: 1;">
+            <h3>Available Diagnostic Logs</h3>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
+                {% for log in logs %}
+                <a href="?log={{ log }}" class="button"
+                    style="background: {{ 'var(--accent-color)' if current_log == log else 'var(--border-color)' }}; text-decoration: none; text-align: left; padding: 0.8rem 1.2rem;">
+                    {{ log }}
+                </a>
+                {% endfor %}
+            </div>
+
+            <p style="margin-top: 2rem; font-size: 0.8rem; color: var(--text-secondary);">
+                <span class="status-badge" style="background: var(--danger);">SECURITY WARNING</span><br>
+                Unauthorized access to system logs is tracked and reported to the Ops-Bridge.
+            </p>
+        </div>
+
+        <div class="card" style="flex: 2;">
+            <h3>Log Output Viewer</h3>
+            {% if content %}
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                <span style="font-family: var(--font-mono); font-size: 0.8rem;">Current File: {{ current_log }}</span>
+                <a href="{{ url_for('maintenance') }}"
+                    style="color: var(--text-secondary); text-decoration: none; font-size: 0.8rem;">Clear Console</a>
+            </div>
+            <pre style="min-height: 300px; font-size: 0.85rem;">{{ content }}</pre>
+            {% elif error %}
+            <div class="alert alert-error">
+                <strong>Critical Exception:</strong> {{ error }}
+            </div>
+            {% else %}
+            <div
+                style="height: 300px; display: flex; align-items: center; justify-content: center; background: #010409; border: 1px solid var(--border-color); border-radius: 6px;">
+                <p style="color: var(--text-secondary);">Select a log file to initialize the diagnostic stream.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

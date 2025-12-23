@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h1>Infrastucture Diagnostic Terminal</h1>
+    <p>Perform real-time connectivity checks on verified Nexus internal nodes.</p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+        <div>
+            <h3>Internal Asset Directory</h3>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                <thead>
+                    <tr style="text-align: left; border-bottom: 2px solid var(--border-color);">
+                        <th style="padding: 1rem;">System Node ID</th>
+                        <th style="padding: 1rem;">Status</th>
+                        <th style="padding: 1rem;">Maintenance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for node in nodes %}
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 1rem; color: #fff;">{{ node[1] }}</td>
+                        <td style="padding: 1rem;">
+                            <span class="status-badge status-live">{{ node[3] }}</span>
+                        </td>
+                        <td style="padding: 1rem;">
+                            <!-- The IP is hidden in a POST parameter, but we expose the Node ID -->
+                            <form method="POST" style="margin: 0;">
+                                <input type="hidden" name="node_id" value="{{ node[0] }}">
+                                <button type="submit" name="action" value="ping"
+                                    style="padding: 0.4rem 0.8rem; font-size: 0.8rem; background: var(--border-color);">PING
+                                    TEST</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <h3>Diagnostic Stream</h3>
+            {% if result %}
+            <div
+                style="background: #010409; padding: 1.5rem; border-radius: 8px; border: 1px solid var(--accent-color); font-family: var(--font-mono); font-size: 0.85rem; color: #79c0ff; min-height: 200px;">
+                <pre>{{ result }}</pre>
+            </div>
+            {% else %}
+            <div
+                style="background: #010409; padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; height: 200px; color: var(--text-secondary);">
+                Waiting for node selection...
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div
+        style="margin-top: 2rem; padding: 1rem; background: rgba(218, 54, 51, 0.05); border-radius: 6px; border: 1px solid var(--border-color);">
+        <p style="font-size: 0.75rem; color: var(--text-secondary);">
+            <strong>Privacy Disclaimer:</strong> Network infrastructure mapping is strictly for internal coordination.
+            Do not distribute IP lists externally.
+            All diagnostic pings are logged per policy 902-A.
+        </p>
+    </div>
+</div>
+{% endblock %}

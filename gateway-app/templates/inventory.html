@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Asset Inventory - Nexus Systems{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h1>Infrastructure Inventory</h1>
+        <form action="/inventory" method="get" style="display: flex; gap: 0.5rem; margin-bottom: 0;">
+            <input type="text" name="q" value="{{ search }}" placeholder="Search by name/IP..."
+                style="margin-bottom: 0; min-width: 250px;">
+            <button type="submit">Filter</button>
+        </form>
+    </div>
+
+    <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+        <thead>
+            <tr style="text-align: left; border-bottom: 2px solid var(--border-color);">
+                <th style="padding: 1rem;">Asset Name</th>
+                <th style="padding: 1rem;">Classification</th>
+                <th style="padding: 1rem;">Network IP</th>
+                <th style="padding: 1rem;">Status</th>
+                <th style="padding: 1rem;">Last Sync</th>
+                <th style="padding: 1rem;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for asset in assets %}
+            <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 1rem; color: #fff; font-weight: 600;">{{ asset[1] }}</td>
+                <td style="padding: 1rem;">{{ asset[2] }}</td>
+                <td style="padding: 1rem;"><code style="color: var(--accent-color);">{{ asset[3] }}</code></td>
+                <td style="padding: 1rem;">
+                    <span class="status-badge {{ 'status-live' if asset[4] == 'Online' else 'status-beta' }}">
+                        {{ asset[4] }}
+                    </span>
+                </td>
+                <td style="padding: 1rem; font-size: 0.85rem; color: var(--text-secondary);">{{ asset[5] }}</td>
+                <td style="padding: 1rem;">
+                    <form method="post" style="margin: 0;">
+                        <input type="hidden" name="ping_target" value="{{ asset[3] }}">
+                        <button type="submit" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; background: var(--border-color);">PING</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            {% if not assets %}
+            <tr>
+                <td colspan="6" style="padding: 3rem; text-align: center; color: var(--text-secondary);">
+                    No assets matched the provided search criteria. Nexus database integrity verified.
+                </td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    
+    {% if ping_result %}
+    <div style="margin-top: 2rem; padding: 1.5rem; background: #010409; border: 1px solid var(--accent-color); border-radius: 6px;">
+        <h3 style="color: var(--accent-color); margin-bottom: 1rem;">Ping Results</h3>
+        <pre style="margin: 0; white-space: pre-wrap; font-size: 0.85rem; color: #79c0ff;">{{ ping_result }}</pre>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

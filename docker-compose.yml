@@ -1,0 +1,47 @@
+services:
+  corporate-portal:
+    build: ./gateway-app
+    ports:
+      - "8282:5000"
+    networks:
+      public_net:
+      internal_net:
+        ipv4_address: 172.20.0.10
+    restart: always
+
+  marketing-hub:
+    build: ./marketing-app
+    networks:
+      internal_net:
+        ipv4_address: 172.20.0.50
+    restart: always
+
+  billing-bridge:
+    build: ./internal-api
+    networks:
+      internal_net:
+        ipv4_address: 172.20.0.20
+    restart: always
+
+  secure-vault:
+    build: ./internal-db
+    networks:
+      internal_net:
+        ipv4_address: 172.20.0.30
+    restart: always
+
+  backup-node:
+    build: ./internal-admin
+    networks:
+      internal_net:
+        ipv4_address: 172.20.0.40
+    restart: always
+
+networks:
+  public_net:
+    driver: bridge
+  internal_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

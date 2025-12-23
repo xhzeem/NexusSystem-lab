@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Report Management - Nexus Systems{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Configuration & Reporting</h1>
+    <p>Configure automated system audit reports and manage global document signatures.</p>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Global Report Signature</h3>
+            <p>This signature will be appended to all generated PDF/HTML audit reports. You can use dynamic placeholders
+                for system metadata.</p>
+
+            <form method="post">
+                <label for="signature"
+                    style="display: block; margin-bottom: 0.5rem; font-size: 0.8rem; color: var(--text-secondary);">Signature
+                    Content</label>
+                <textarea name="signature" id="signature" rows="3" style="width: 100%;"
+                    required>{{ signature }}</textarea>
+                <button type="submit" style="margin-top: 0.5rem;">Update Global Signature</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3>Audit Preview</h3>
+            <p>Live visualization of the system audit header and footer configuration.</p>
+            {{ preview | safe }}
+        </div>
+    </div>
+</div>
+
+<div class="card" style="margin-top: 2rem; opacity: 0.6;">
+    <h2>Available Report Templates</h2>
+    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+        <div style="padding: 1rem; border: 1px solid var(--border-color); border-radius: 6px; flex: 1;">
+            <p style="font-weight: 700; color: #fff;">Network Topology</p>
+            <p style="font-size: 0.8rem;">Visual breakdown of internal subnets.</p>
+            <span class="status-badge" style="background: var(--border-color);">READY</span>
+        </div>
+        <div style="padding: 1rem; border: 1px solid var(--border-color); border-radius: 6px; flex: 1;">
+            <p style="font-weight: 700; color: #fff;">Asset Variance</p>
+            <p style="font-size: 0.8rem;">Discrepancies in sync logs.</p>
+            <span class="status-badge" style="background: var(--border-color);">READY</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

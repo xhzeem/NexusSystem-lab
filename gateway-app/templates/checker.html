@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}URL Checker - Cerberus Lab{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Internal Service Checker</h1>
+    <p>Use this tool to verify the reachability of internal microservices (172.20.0.0/24 subnet).</p>
+
+    <form method="post" style="margin-bottom: 2rem;">
+        <label for="url"
+            style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">Destination
+            URL</label>
+        <div style="display: flex; gap: 1rem;">
+            <input type="text" name="url" id="url" placeholder="http://172.20.0.20:5000" required
+                style="margin-bottom: 0; flex-grow: 1;">
+            <button type="submit">Verify Reachability</button>
+        </div>
+    </form>
+
+    {% if result %}
+    <h3>Analysis Results</h3>
+    <div class="card" style="background: #010409; border-color: var(--accent-color);">
+        <pre>{{ result | safe }}</pre>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

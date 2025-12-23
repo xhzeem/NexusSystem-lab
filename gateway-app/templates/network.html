@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Network Operations - Nexus Systems{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Network Connectivity Dashboard</h1>
+    <p>Verify connectivity between the Nexus Gateway and internal microservice nodes or external monitoring webhooks.
+    </p>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Monitoring Webhook Tester</h3>
+            <p>Submit an endpoint URL to test the connectivity from the Nexus core engine.</p>
+
+            <form method="post">
+                <label for="url"
+                    style="display: block; margin-bottom: 0.5rem; font-size: 0.8rem; color: var(--text-secondary);">Target
+                    Service Endpoint</label>
+                <input type="text" name="url" id="url" placeholder="http://monitoring.nexus.internal/health" required>
+                <button type="submit" style="width: 100%;">Initialize Diagnostic Test</button>
+            </form>
+
+            {% if status %}
+            <div
+                style="margin-top: 1.5rem; padding: 1rem; background: #010409; border: 1px solid var(--accent-color); border-radius: 6px;">
+                <p style="font-weight: 700; color: var(--accent-color); margin-bottom: 0.5rem;">Diagnostic Data:</p>
+                <pre style="margin: 0; white-space: pre-wrap; font-size: 0.85rem;">{{ status }}</pre>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h3>Ops-Bridge Synchronizer</h3>
+            <p>Current sync state with the redundant internal gateway nodes.</p>
+            <div style="margin-top: 1rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span>Ops-Bridge Alpha (172.20.0.20)</span>
+                    <span style="color: var(--accent-color);">ACTIVE</span>
+                </div>
+                <div style="height: 4px; background: var(--border-color); border-radius: 2px;">
+                    <div style="width: 85%; height: 100%; background: var(--accent-color);"></div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; margin-top: 1.5rem;">
+                    <span>Central-Vault (172.20.0.30)</span>
+                    <span style="color: var(--accent-color);">ACTIVE</span>
+                </div>
+                <div style="height: 4px; background: var(--border-color); border-radius: 2px;">
+                    <div style="width: 100%; height: 100%; background: var(--accent-color);"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

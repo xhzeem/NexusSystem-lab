@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem;">
+    <div style="flex-grow: 1;">
+        <h1>Corporate Briefings</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 2rem;">Latest updates from Nexus Global Operations.</p>
+
+        {% for post in posts %}
+        <div class="card" style="margin-bottom: 2rem; padding: 0; overflow: hidden;">
+            <div
+                style="height: 200px; background: #161b22 url('{{ post[4] }}') no-repeat center center; background-size: cover;">
+            </div>
+            <div style="padding: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h2 style="margin: 0;">{{ post[1] }}</h2>
+                    <span style="font-size: 0.8rem; color: var(--text-secondary);">{{ post[5] }}</span>
+                </div>
+                <p>{{ post[2] }}</p>
+                <div
+                    style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color); font-size: 0.85rem; font-style: italic; color: var(--text-secondary);">
+                    {{ signature | safe }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div style="width: 320px; position: sticky; top: 100px;">
+        <div class="card">
+            <h3>Employee Toolbox</h3>
+            <ul style="list-style: none; margin-top: 1rem;">
+                <li style="margin-bottom: 1rem;">
+                    <a href="{{ url_for('diagnostics') }}"
+                        style="text-decoration: none; color: #fff; font-weight: 600;">Check Infrastructure Health</a>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary);">Diagnose connectivity to internal nodes.
+                    </p>
+                </li>
+                <li style="margin-bottom: 1rem;">
+                    <a href="{{ url_for('download', doc='policy_v1.txt') }}"
+                        style="text-decoration: none; color: #fff; font-weight: 600;">Corporate Policy v1.1</a>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary);">Mandatory reading for all staff.</p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card" style="margin-top: 1.5rem;">
+            <h3>External Resources</h3>
+            <p style="font-size: 0.8rem;">Preview partner logos via our secure proxy.</p>
+            <a href="/proxy?url=http://172.20.0.50" class="btn"
+                style="display: block; text-align: center; font-size: 0.8rem;">Verify Marketing Hub</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
