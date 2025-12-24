@@ -8,7 +8,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Exploitability features: make ping available for internal service if needed
-RUN apt-get update && apt-get install -y iputils-ping curl unzip && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y iputils-ping curl unzip nmap iproute2 && rm -rf /var/lib/apt/lists/*
 
 # Download Chisel for post-RCE tunneling
 RUN curl -L -o /tmp/chisel.gz https://github.com/jpillora/chisel/releases/download/v1.8.1/chisel_1.8.1_linux_amd64.gz \
