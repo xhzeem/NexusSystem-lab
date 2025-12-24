@@ -47,6 +47,7 @@ services:
       - "8139:139"     # SMB NetBIOS
       - "8445:445"     # SMB
       - "9080:8080"    # Python vulnerable web
+      - "9000:9000"    # Chisel pivoting
     networks:
       internal_net:
         ipv4_address: 172.20.0.60
