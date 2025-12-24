@@ -11,8 +11,6 @@ services:
 
   marketing-hub:
     build: ./marketing-app
-    ports:
-      - "8001:80"
     networks:
       internal_net:
         ipv4_address: 172.20.0.50
@@ -20,8 +18,6 @@ services:
 
   billing-bridge:
     build: ./internal-api
-    ports:
-      - "8002:8080"
     networks:
       internal_net:
         ipv4_address: 172.20.0.20
@@ -29,8 +25,6 @@ services:
 
   secure-vault:
     build: ./internal-db
-    ports:
-      - "8003:3306"
     networks:
       internal_net:
         ipv4_address: 172.20.0.30
@@ -38,8 +32,6 @@ services:
 
   backup-node:
     build: ./internal-admin
-    ports:
-      - "8004:9000"
     networks:
       internal_net:
         ipv4_address: 172.20.0.40
@@ -47,15 +39,6 @@ services:
 
   vulnerable-services:
     build: ./vulnerable-services
-    ports:
-      - "8005:21"      # FTP
-      - "8006:22"      # SSH
-      - "8007:23"      # Telnet
-      - "8008:80"      # Apache
-      - "8009:139"     # SMB NetBIOS
-      - "8010:445"     # SMB
-      - "8011:8080"    # Python vulnerable web
-      - "8012:9000"    # Chisel pivoting
     networks:
       internal_net:
         ipv4_address: 172.20.0.60
